@@ -14,8 +14,10 @@ import styles from './app.module.css';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 import { useDispatch } from '../../services/store';
-import { getIngredients } from '../../services/slices/ingredientsSlice';
+import { getIngredients } from '../../services/slices/ingredients-slice';
 import { useEffect } from 'react';
+import { ProtectedRoute } from '../protected-route/protected-route';
+import { getUser } from '../../services/slices/user-slice';
 
 const App = () => {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(getUser());
   }, [dispatch]);
 
   const handleModalClose = () => {
@@ -46,7 +49,14 @@ const App = () => {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/profile'>
-          <Route index element={<Profile />} />
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path='orders'>
             <Route index element={<ProfileOrders />} />
             <Route path=':number' element={<OrderInfo />} />
