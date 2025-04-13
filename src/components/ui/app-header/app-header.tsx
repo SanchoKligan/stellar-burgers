@@ -32,11 +32,9 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
       <nav className={`${styles.menu} p-4`}>
         <div className={styles.menu_part_left}>
           <Link
-            className={
-              linkNumber === LinkNumbers.Constructor
-                ? styles.link_active
-                : styles.link
-            }
+            className={`${styles.link} ${
+              linkNumber === LinkNumbers.Constructor ? styles.link_active : ''
+            }`}
             to='/'
           >
             <BurgerIcon
@@ -49,9 +47,9 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
             </p>
           </Link>
           <Link
-            className={
-              linkNumber === LinkNumbers.Feed ? styles.link_active : styles.link
-            }
+            className={`${styles.link} ${
+              linkNumber === LinkNumbers.Feed ? styles.link_active : ''
+            }`}
             to='/feed'
           >
             <ListIcon
@@ -65,11 +63,9 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
         </div>
         <div className={styles.link_position_last}>
           <Link
-            className={
-              linkNumber === LinkNumbers.Profile
-                ? styles.link_active
-                : styles.link
-            }
+            className={`${styles.link} ${
+              linkNumber === LinkNumbers.Profile ? styles.link_active : ''
+            }`}
             to='/profile'
           >
             <ProfileIcon

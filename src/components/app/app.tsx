@@ -17,7 +17,6 @@ import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const background = location.state?.background;
 
   const onModalClose = () => {
@@ -52,7 +51,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Хы' onClose={onModalClose}>
+              <Modal title='Детали ингредиента' onClose={onModalClose}>
                 <IngredientDetails />
               </Modal>
             }
@@ -60,7 +59,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='Хы' onClose={onModalClose}>
+              <Modal title='' onClose={onModalClose}>
                 <OrderInfo />
               </Modal>
             }
@@ -68,7 +67,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title='Хы' onClose={onModalClose}>
+              <Modal title='' onClose={onModalClose}>
                 <OrderInfo />
               </Modal>
             }
