@@ -13,13 +13,21 @@ import '../../index.css';
 import styles from './app.module.css';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
+import { useDispatch } from '../../services/store';
+import { getIngredients } from '../../services/slices/ingredientsSlice';
+import { useEffect } from 'react';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state?.background;
+  const dispatch = useDispatch();
 
-  const onModalClose = () => {
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  const handleModalClose = () => {
     navigate(-1);
   };
 
@@ -51,7 +59,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Детали ингредиента' onClose={onModalClose}>
+              <Modal title='Детали ингредиента' onClose={handleModalClose}>
                 <IngredientDetails />
               </Modal>
             }
@@ -59,7 +67,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='' onClose={onModalClose}>
+              <Modal title='' onClose={handleModalClose}>
                 <OrderInfo />
               </Modal>
             }
@@ -67,7 +75,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title='' onClose={onModalClose}>
+              <Modal title='' onClose={handleModalClose}>
                 <OrderInfo />
               </Modal>
             }
