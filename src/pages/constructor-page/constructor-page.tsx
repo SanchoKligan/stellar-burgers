@@ -15,7 +15,7 @@ export const ConstructorPage: FC = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

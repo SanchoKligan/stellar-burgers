@@ -13,7 +13,7 @@ export const Feed: FC = () => {
 
   useEffect(() => {
     dispatch(getFeeds());
-  }, [dispatch]);
+  }, []);
 
   const handleGetFeeds = () => {
     dispatch(getFeeds());
