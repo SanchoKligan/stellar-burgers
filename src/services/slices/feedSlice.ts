@@ -1,6 +1,6 @@
 import { TOrdersData } from '@utils-types';
 import { getFeedsApi } from '@api';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 type TFeedState = {
   feed: TOrdersData;
@@ -24,9 +24,12 @@ const feedsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getFeeds.fulfilled, (state, action) => {
-      state.feed = action.payload;
-    });
+    builder.addCase(
+      getFeeds.fulfilled,
+      (state, action: PayloadAction<TOrdersData>) => {
+        state.feed = action.payload;
+      }
+    );
   }
 });
 
