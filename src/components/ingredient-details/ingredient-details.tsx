@@ -12,12 +12,13 @@ type IngredientParams = {
 
 export const IngredientDetails: FC = () => {
   const { id } = useParams<IngredientParams>();
-  const ingredientData: TIngredient | undefined = useSelector(
-    (state) => state.ingredientsReducer.ingredients
-  ).find((el) => el._id == id);
   const location = useLocation();
   const background = location.state?.background;
   const dispatch = useDispatch();
+
+  const ingredientData: TIngredient | undefined = useSelector(
+    (state) => state.ingredientsReducer.ingredients
+  ).find((el) => el._id == id);
 
   useEffect(() => {
     if (!background) {
