@@ -5,7 +5,8 @@ import {
   logoutApi,
   registerUserApi,
   TLoginData,
-  TRegisterData
+  TRegisterData,
+  updateUserApi
 } from '@api';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
@@ -13,6 +14,7 @@ import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
 type TError = {
   loginError: string | undefined;
   registerError: string | undefined;
+  updateError: string | undefined;
 };
 
 type TUserState = {
@@ -29,7 +31,8 @@ const initialState: TUserState = {
   isAuthenticated: false,
   error: {
     loginError: undefined,
-    registerError: undefined
+    registerError: undefined,
+    updateError: undefined
   },
   isPending: false
 };
@@ -83,6 +86,15 @@ export const logoutUser = createAsyncThunk('user/logout', async () => {
   localStorage.clear();
 });
 
+export const updateUser = createAsyncThunk(
+  'user/update',
+  async (data: TRegisterData, { dispatch }) => {
+    await updateUserApi(data);
+
+    dispatch(getUser());
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -129,6 +141,16 @@ const userSlice = createSlice({
         state.isPending = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isPending = true;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isPending = false;
+        state.error.updateError = action.error.message;
+      })
+      .addCase(updateUser.fulfilled, (state) => {
+        state.isPending = false;
       });
   }
 });
