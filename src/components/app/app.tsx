@@ -17,7 +17,7 @@ import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../services/slices/ingredients-slice';
 import { useEffect } from 'react';
 import { ProtectedRoute } from '../protected-route/protected-route';
-import { getUser } from '../../services/slices/user-slice';
+import { checkUserAuth } from '../../services/slices/user-slice';
 
 const App = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
-    dispatch(getUser());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   const handleModalClose = () => {
@@ -44,10 +44,38 @@ const App = () => {
           <Route path=':number' element={<OrderInfo />} />
         </Route>
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route
+          path='/login'
+          element={
+            <ProtectedRoute>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <ProtectedRoute>
+              <Register />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <ProtectedRoute>
+              <ForgotPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reset-password'
+          element={
+            <ProtectedRoute>
+              <ResetPassword />
+            </ProtectedRoute>
+          }
+        />
         <Route path='/profile'>
           <Route
             index
@@ -58,8 +86,22 @@ const App = () => {
             }
           />
           <Route path='orders'>
-            <Route index element={<ProfileOrders />} />
-            <Route path=':number' element={<OrderInfo />} />
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <ProfileOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path=':number'
+              element={
+                <ProtectedRoute>
+                  <OrderInfo />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Route>
         <Route path='*' element={<NotFound404 />} />
@@ -85,9 +127,11 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title='' onClose={handleModalClose}>
-                <OrderInfo />
-              </Modal>
+              <ProtectedRoute>
+                <Modal title='' onClose={handleModalClose}>
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>
