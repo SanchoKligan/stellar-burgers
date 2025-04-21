@@ -43,7 +43,14 @@ const App = () => {
           <Route index element={<Feed />} />
           <Route path=':number' element={<OrderInfo />} />
         </Route>
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <div className={styles.detailPageWrap}>
+              <IngredientDetails />
+            </div>
+          }
+        />
         <Route
           path='/login'
           element={
@@ -104,7 +111,14 @@ const App = () => {
             />
           </Route>
         </Route>
-        <Route path='*' element={<NotFound404 />} />
+        <Route
+          path='*'
+          element={
+            <div className={styles.detailPageWrap}>
+              <NotFound404 />
+            </div>
+          }
+        />
       </Routes>
       {background && (
         <Routes>

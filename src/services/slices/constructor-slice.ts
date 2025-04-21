@@ -80,7 +80,8 @@ const constructorSlice = createSlice({
       if (idx !== ingredients.length - 1) {
         swapIngredients(ingredients, idx, idx + 1);
       }
-    }
+    },
+    clearConstructor: () => initialState
   },
   extraReducers: (builder) => {
     builder
@@ -101,5 +102,6 @@ export const {
   addIngredient,
   removeIngredient,
   moveUpIngredient,
-  moveDownIngredient
+  moveDownIngredient,
+  clearConstructor
 } = constructorSlice.actions;
