@@ -1,12 +1,14 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { TLoginData } from '@api';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { loginUser } from '../../services/slices/user-slice';
+import { Preloader } from '@ui';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { error, isPending } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -20,9 +22,13 @@ export const Login: FC = () => {
     dispatch(loginUser(data));
   };
 
+  if (isPending) {
+    return <Preloader />;
+  }
+
   return (
     <LoginUI
-      errorText=''
+      errorText={error.loginError || ''}
       email={email}
       setEmail={setEmail}
       password={password}

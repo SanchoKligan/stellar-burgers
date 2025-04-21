@@ -2,9 +2,11 @@ import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from '../../services/store';
 import { TUser } from '@utils-types';
+import { Preloader } from '@ui';
 
 export const Profile: FC = () => {
   const user = useSelector((state) => state.userReducer.user) as TUser;
+  const { isPending } = useSelector((state) => state.userReducer);
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -44,6 +46,10 @@ export const Profile: FC = () => {
       [e.target.name]: e.target.value
     }));
   };
+
+  if (isPending) {
+    return <Preloader />;
+  }
 
   return (
     <ProfileUI

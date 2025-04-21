@@ -1,14 +1,15 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { registerUser } from '../../services/slices/user-slice';
 import { TRegisterData } from '@api';
+import { Preloader } from '@ui';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const { error, isPending } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -23,9 +24,13 @@ export const Register: FC = () => {
     dispatch(registerUser(data));
   };
 
+  if (isPending) {
+    return <Preloader />;
+  }
+
   return (
     <RegisterUI
-      errorText=''
+      errorText={error.registerError || ''}
       email={email}
       userName={userName}
       password={password}

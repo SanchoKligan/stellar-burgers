@@ -10,16 +10,28 @@ import {
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
 
+type TError = {
+  loginError: string | undefined;
+  registerError: string | undefined;
+};
+
 type TUserState = {
   user: TUser | null;
   isAuthChecked: boolean;
   isAuthenticated: boolean;
+  error: TError;
+  isPending: boolean;
 };
 
 const initialState: TUserState = {
   user: null,
   isAuthChecked: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  error: {
+    loginError: undefined,
+    registerError: undefined
+  },
+  isPending: false
 };
 
 export const getUser = createAsyncThunk(
@@ -71,7 +83,6 @@ export const logoutUser = createAsyncThunk('user/logout', async () => {
   localStorage.clear();
 });
 
-//TODO: разобраться с типизацией
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -85,15 +96,37 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
       })
+      .addCase(registerUser.pending, (state) => {
+        state.isPending = true;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isPending = false;
+        state.error.registerError = action.error.message;
+      })
       .addCase(registerUser.fulfilled, (state, action) => {
+        state.isPending = false;
         state.user = action.payload;
         state.isAuthenticated = true;
+        state.error.registerError = undefined;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isPending = true;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isPending = false;
+        state.error.loginError = action.error.message;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.isPending = false;
         state.user = action.payload;
         state.isAuthenticated = true;
+        state.error.loginError = undefined;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isPending = true;
       })
       .addCase(logoutUser.fulfilled, (state) => {
+        state.isPending = false;
         state.user = null;
         state.isAuthenticated = false;
       });
