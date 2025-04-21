@@ -1,6 +1,7 @@
 import { TIngredient, TConstructorIngredient, TOrder } from '@utils-types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { nanoid } from '@reduxjs/toolkit';
+import { orderBurgerApi } from '@api';
 
 type TConstructorState = {
   constructorItems: {
@@ -30,6 +31,11 @@ const swapIngredients = (
   ingredients[firstIdx] = ingredients[secondIdx];
   ingredients[secondIdx] = tempIngredient;
 };
+
+export const orderBurger = createAsyncThunk(
+  'burger/order',
+  async (data: string[]) => await orderBurgerApi(data)
+);
 
 const constructorSlice = createSlice({
   name: 'constructor',
@@ -75,6 +81,18 @@ const constructorSlice = createSlice({
         swapIngredients(ingredients, idx, idx + 1);
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(orderBurger.pending, (state) => {
+        state.orderRequest = true;
+      })
+      .addCase(orderBurger.fulfilled, (state, action) => {
+        state.orderRequest = false;
+        state.orderModalData = action.payload.order;
+        state.constructorItems.bun = null;
+        state.constructorItems.ingredients = [];
+      });
   }
 });
 
