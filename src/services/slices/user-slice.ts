@@ -156,4 +156,5 @@ const userSlice = createSlice({
 });
 
 export const { authChecked } = userSlice.actions;
-export const reducer = userSlice.reducer;
+
+export default userSlice.reducer;

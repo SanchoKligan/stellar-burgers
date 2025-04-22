@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Preloader, ProfileMenuUI } from '@ui';
-import { useDispatch, useSelector } from '../../services/store';
-import { logoutUser } from '../../services/slices/user-slice';
+import { ProfileMenuUI } from '@ui';
+import { useDispatch } from '@store';
+import { logoutUser } from '@slices';
 
 export const ProfileMenu: FC = () => {
   const { pathname } = useLocation();

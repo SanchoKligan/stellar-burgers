@@ -40,4 +40,4 @@ const feedsSlice = createSlice({
   }
 });
 
-export const reducer = feedsSlice.reducer;
+export default feedsSlice.reducer;

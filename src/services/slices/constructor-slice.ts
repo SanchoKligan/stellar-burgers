@@ -97,7 +97,6 @@ const constructorSlice = createSlice({
   }
 });
 
-export const reducer = constructorSlice.reducer;
 export const {
   addIngredient,
   removeIngredient,
@@ -105,3 +104,5 @@ export const {
   moveDownIngredient,
   clearConstructor
 } = constructorSlice.actions;
+
+export default constructorSlice.reducer;

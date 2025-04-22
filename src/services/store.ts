@@ -1,9 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducer as feedReducer } from './slices/feed-slice';
-import { reducer as ingredientsReducer } from './slices/ingredients-slice';
-import { reducer as constructorReducer } from './slices/constructor-slice';
-import { reducer as userReducer } from './slices/user-slice';
-import { reducer as ordersReducer } from './slices/orders-slice';
+import feedReducer from './slices/feed-slice';
+import ingredientsReducer from './slices/ingredients-slice';
+import constructorReducer from './slices/constructor-slice';
+import userReducer from './slices/user-slice';
+import ordersReducer from './slices/orders-slice';
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,

@@ -39,5 +39,6 @@ const ingredientsSlice = createSlice({
   }
 });
 
-export const reducer = ingredientsSlice.reducer;
 export const { getIngredientsStateSelector } = ingredientsSlice.getSelectors();
+
+export default ingredientsSlice.reducer;

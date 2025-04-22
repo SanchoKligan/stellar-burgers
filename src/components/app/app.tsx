@@ -12,12 +12,16 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
-import { useDispatch } from '../../services/store';
-import { getIngredients } from '../../services/slices/ingredients-slice';
+import {
+  AppHeader,
+  Modal,
+  OrderInfo,
+  IngredientDetails,
+  ProtectedRoute
+} from '@components';
+import { useDispatch } from '@store';
 import { useEffect } from 'react';
-import { ProtectedRoute } from '../protected-route/protected-route';
-import { checkUserAuth } from '../../services/slices/user-slice';
+import { getIngredients, checkUserAuth } from '@slices';
 
 const App = () => {
   const navigate = useNavigate();
