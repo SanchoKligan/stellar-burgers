@@ -1,4 +1,4 @@
-import { TOrder, TOrdersData } from '@utils-types';
+import { TOrder } from '@utils-types';
 import { getOrderByNumberApi, getOrdersApi } from '@api';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 

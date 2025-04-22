@@ -1,8 +1,8 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { TLoginData } from '@api';
-import { useDispatch, useSelector } from '../../services/store';
-import { loginUser } from '../../services/slices/user-slice';
+import { useDispatch, useSelector } from '@store';
+import { loginUser } from '@slices';
 import { Preloader } from '@ui';
 
 export const Login: FC = () => {

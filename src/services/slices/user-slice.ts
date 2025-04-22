@@ -8,7 +8,7 @@ import {
   TRegisterData,
   updateUserApi
 } from '@api';
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
 
 type TError = {

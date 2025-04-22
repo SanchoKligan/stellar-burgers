@@ -1,9 +1,9 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '@store';
 import { TUser } from '@utils-types';
 import { Preloader } from '@ui';
-import { updateUser } from '../../services/slices/user-slice';
+import { updateUser } from '@slices';
 
 export const Profile: FC = () => {
   const user = useSelector((state) => state.userReducer.user) as TUser;

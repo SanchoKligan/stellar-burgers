@@ -2,8 +2,8 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from '../../services/store';
-import { getFeeds } from '../../services/slices/feed-slice';
+import { useSelector, useDispatch } from '@store';
+import { getFeeds } from '@slices';
 
 export const Feed: FC = () => {
   const orders: TOrder[] = useSelector(
