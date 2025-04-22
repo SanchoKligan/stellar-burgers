@@ -9,6 +9,9 @@ import { getOrderByNumber } from '../../services/slices/orders-slice';
 export const OrderInfo: FC = () => {
   const orderNumber = Number(useParams().number);
   const orderData = useSelector((state) => state.ordersReducer.exactOrder);
+  const isPending = useSelector(
+    (state) => state.ordersReducer.isPendingOrderByNumber
+  );
   const { ingredients } = useSelector((state) => state.ingredientsReducer);
   const dispatch = useDispatch();
 
@@ -58,7 +61,7 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (!orderInfo || isPending) {
     return <Preloader />;
   }
 

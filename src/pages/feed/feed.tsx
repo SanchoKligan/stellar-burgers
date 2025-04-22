@@ -9,6 +9,7 @@ export const Feed: FC = () => {
   const orders: TOrder[] = useSelector(
     (state) => state.feedReducer.feed.orders
   );
+  const { isPending } = useSelector((state) => state.feedReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export const Feed: FC = () => {
     dispatch(getFeeds());
   };
 
-  if (!orders.length) {
+  if (!orders.length || isPending) {
     return <Preloader />;
   }
 

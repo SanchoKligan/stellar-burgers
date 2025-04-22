@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 type TFeedState = {
   feed: TOrdersData;
+  isPending: boolean;
 };
 
 const initialState: TFeedState = {
@@ -11,7 +12,8 @@ const initialState: TFeedState = {
     orders: [],
     total: 0,
     totalToday: 0
-  }
+  },
+  isPending: false
 };
 
 export const getFeeds = createAsyncThunk(
@@ -24,12 +26,17 @@ const feedsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      getFeeds.fulfilled,
-      (state, action: PayloadAction<TOrdersData>) => {
-        state.feed = action.payload;
-      }
-    );
+    builder
+      .addCase(getFeeds.pending, (state) => {
+        state.isPending = true;
+      })
+      .addCase(
+        getFeeds.fulfilled,
+        (state, action: PayloadAction<TOrdersData>) => {
+          state.feed = action.payload;
+          state.isPending = false;
+        }
+      );
   }
 });
 
