@@ -10,16 +10,17 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 }: ProtectedRouteProps) => {
   const { user, isAuthChecked } = useSelector(getUserStateSelector);
   const location = useLocation();
+  const isPathForAuthorized = location.pathname.includes('/profile');
 
   if (!isAuthChecked) {
     return <Preloader />;
   }
 
-  if (!user && location.pathname.includes('/profile')) {
+  if (!user && isPathForAuthorized) {
     return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
-  if (user && !location.pathname.includes('/profile')) {
+  if (user && !isPathForAuthorized) {
     const from = location.state?.from || { pathname: '/' };
 
     return <Navigate replace to={from} />;
