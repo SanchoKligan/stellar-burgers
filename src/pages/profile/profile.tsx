@@ -3,16 +3,15 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '@store';
 import { TUser } from '@utils-types';
 import { Preloader } from '@ui';
-import { updateUser } from '@slices';
+import { getUserStateSelector, updateUser } from '@slices';
 
 export const Profile: FC = () => {
-  const user = useSelector((state) => state.userReducer.user) as TUser;
-  const { error, isPending } = useSelector((state) => state.userReducer);
+  const { user, error, isPending } = useSelector(getUserStateSelector);
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
-    name: user.name,
-    email: user.email,
+    name: user?.name || '',
+    email: user?.email || '',
     password: ''
   });
 
@@ -44,8 +43,8 @@ export const Profile: FC = () => {
   const handleCancel = (e: SyntheticEvent) => {
     e.preventDefault();
     setFormValue({
-      name: user.name,
-      email: user.email,
+      name: user?.name || '',
+      email: user?.email || '',
       password: ''
     });
   };

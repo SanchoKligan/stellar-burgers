@@ -152,9 +152,13 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state) => {
         state.isPending = false;
       });
+  },
+  selectors: {
+    getUserStateSelector: (state) => state
   }
 });
 
 export const { authChecked } = userSlice.actions;
+export const { getUserStateSelector } = userSlice.selectors;
 
 export default userSlice.reducer;

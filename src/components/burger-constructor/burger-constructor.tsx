@@ -3,14 +3,19 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '@store';
 import { useNavigate } from 'react-router-dom';
-import { clearConstructor, orderBurger } from '@slices';
+import {
+  clearConstructor,
+  getUserStateSelector,
+  getConstructorStateSelector,
+  orderBurger
+} from '@slices';
 
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   const { constructorItems, orderRequest, orderModalData } = useSelector(
-    (state) => state.constructorReducer
+    getConstructorStateSelector
   );
-  const { isAuthenticated } = useSelector((state) => state.userReducer);
+  const { isAuthenticated } = useSelector(getUserStateSelector);
   const dispatch = useDispatch();
 
   const onOrderClick = () => {

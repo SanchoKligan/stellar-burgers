@@ -5,15 +5,19 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 type TOrdersState = {
   orders: TOrder[];
   exactOrder: TOrder | null;
-  isPendingOrders: boolean;
-  isPendingOrderByNumber: boolean;
+  pending: {
+    isPendingOrders: boolean;
+    isPendingExactOrder: boolean;
+  };
 };
 
 const initialState: TOrdersState = {
   orders: [],
   exactOrder: null,
-  isPendingOrders: false,
-  isPendingOrderByNumber: false
+  pending: {
+    isPendingOrders: false,
+    isPendingExactOrder: false
+  }
 };
 
 export const getOrders = createAsyncThunk(
@@ -33,23 +37,28 @@ const ordersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getOrders.pending, (state) => {
-        state.isPendingOrders = true;
+        state.pending.isPendingOrders = true;
       })
       .addCase(
         getOrders.fulfilled,
         (state, action: PayloadAction<TOrder[]>) => {
           state.orders = action.payload;
-          state.isPendingOrders = false;
+          state.pending.isPendingOrders = false;
         }
       )
       .addCase(getOrderByNumber.pending, (state, action) => {
-        state.isPendingOrderByNumber = true;
+        state.pending.isPendingExactOrder = true;
       })
       .addCase(getOrderByNumber.fulfilled, (state, action) => {
         state.exactOrder = action.payload.orders[0];
-        state.isPendingOrderByNumber = false;
+        state.pending.isPendingExactOrder = false;
       });
+  },
+  selectors: {
+    getOrdersStateSelector: (state) => state
   }
 });
+
+export const { getOrdersStateSelector } = ordersSlice.selectors;
 
 export default ordersSlice.reducer;

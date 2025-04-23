@@ -37,7 +37,12 @@ const feedsSlice = createSlice({
           state.isPending = false;
         }
       );
+  },
+  selectors: {
+    getFeedStateSelector: (state) => state
   }
 });
+
+export const { getFeedStateSelector } = feedsSlice.selectors;
 
 export default feedsSlice.reducer;

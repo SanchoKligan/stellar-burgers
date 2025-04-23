@@ -11,11 +11,11 @@ import {
 } from 'react-redux';
 
 const rootReducer = combineReducers({
-  feedReducer,
-  ingredientsReducer,
-  constructorReducer,
-  userReducer,
-  ordersReducer
+  feed: feedReducer,
+  ingredients: ingredientsReducer,
+  burgerConstructor: constructorReducer,
+  user: userReducer,
+  orders: ordersReducer
 });
 
 const store = configureStore({

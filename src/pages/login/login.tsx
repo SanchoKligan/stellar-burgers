@@ -2,13 +2,13 @@ import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { TLoginData } from '@api';
 import { useDispatch, useSelector } from '@store';
-import { loginUser } from '@slices';
+import { getUserStateSelector, loginUser } from '@slices';
 import { Preloader } from '@ui';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { error, isPending } = useSelector((state) => state.userReducer);
+  const { error, isPending } = useSelector(getUserStateSelector);
   const dispatch = useDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
