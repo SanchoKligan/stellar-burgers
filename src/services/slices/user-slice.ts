@@ -107,6 +107,7 @@ const userSlice = createSlice({
     builder
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.isAuthenticated = true;
       })
       .addCase(registerUser.pending, (state) => {
         state.isPending = true;
